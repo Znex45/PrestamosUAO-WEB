@@ -1,10 +1,13 @@
 import fs from "node:fs/promises";
 import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 
 // Esta configuración es opcional y local a cada computador; no contiene claves.
 const configUrl = new URL("../.local/mysql.json", import.meta.url);
+const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 
 async function isListening(host, port) {
   return new Promise((resolve) => {
@@ -25,7 +28,13 @@ async function start() {
     if (error.code === "ENOENT") return; // Otros equipos usan su instalación MySQL.
     throw error;
   }
-  const { executable, defaultsFile, host, port } = config;
+  const { host, port } = config;
+  if (typeof config.executable !== "string" || !config.executable ||
+      typeof config.defaultsFile !== "string" || !config.defaultsFile) {
+    throw new Error("Falta la ruta de MySQL en .local/mysql.json.");
+  }
+  const executable = path.resolve(projectRoot, config.executable);
+  const defaultsFile = path.resolve(projectRoot, config.defaultsFile);
   if (host !== "127.0.0.1" || !Number.isInteger(port) || port < 1 || port > 65535) {
     throw new Error("La configuración de MySQL local no es válida.");
   }
@@ -33,10 +42,14 @@ async function start() {
     console.log(`MySQL local disponible en ${host}:${port}.`);
     return;
   }
-  await fs.access(executable);
+  try {
+    await fs.access(executable);
+  } catch (error) {
+    throw new Error(`No se encuentra el servidor en ${executable}. Revisa executable en .local/mysql.json.`, { cause: error });
+  }
   await fs.access(defaultsFile);
   const child = spawn(executable, [`--defaults-file=${defaultsFile}`], {
-    detached: true, windowsHide: true, stdio: "ignore",
+    cwd: projectRoot, detached: true, windowsHide: true, stdio: "ignore",
   });
   let startError;
   child.on("error", (error) => { startError = error; });
