@@ -2,6 +2,7 @@
 node_modules/
 dist/
 coverage/
+.local/
 *.log
 
 # Configuración local y credenciales

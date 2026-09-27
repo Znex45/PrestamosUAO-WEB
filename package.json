@@ -4,6 +4,8 @@
   "type": "module",
   "workspaces": ["frontend", "backend"],
   "scripts": {
+    "predev": "npm run mysql:start",
+    "mysql:start": "node scripts/start-local-mysql.mjs",
     "dev": "concurrently -n API,WEB -c blue,green \"npm run backend\" \"npm run frontend\"",
     "backend": "npm run dev --workspace backend",
     "frontend": "npm run dev --workspace frontend",

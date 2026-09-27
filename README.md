@@ -109,6 +109,14 @@ npm run frontend
 
 También se pueden iniciar ambos con `npm run dev`. Las rutas públicas son `/`, `/login` y `/registro`. Los formularios tienen validación nativa básica, pero no envían datos todavía.
 
+### MySQL local y Workbench
+
+La aplicación y Workbench deben usar el mismo host, puerto y esquema de `backend/.env`. En Workbench cree una conexión TCP/IP con esos valores y utilice `DB_USER` y `DB_PASSWORD` del archivo local; seleccione `DB_NAME` como esquema predeterminado. Nunca copie las credenciales al repositorio.
+
+Si el equipo tiene una instalación portátil configurada en `.local/mysql.json`, `npm run dev` la inicia automáticamente antes del frontend y backend. También puede iniciarla con `npm run mysql:start` para usar Workbench por separado. Los equipos sin ese archivo siguen utilizando su servidor MySQL habitual y deben iniciarlo antes de ejecutar el proyecto. `.local/` está excluido de Git.
+
+Cada integrante ejecuta `npm install`, crea sus archivos `.env`, configura su propio MySQL y ejecuta `npm run db:init` y `npm run health:check`. `database/schema.sql` y `database/seed.sql` son la fuente compartida de estructura y catálogos; los datos y contraseñas permanecen locales.
+
 ## Prueba de /health
 
 Con backend y MySQL iniciados:
