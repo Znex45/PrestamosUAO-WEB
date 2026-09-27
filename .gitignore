@@ -1,0 +1,23 @@
+# Dependencias y resultados de compilación
+node_modules/
+dist/
+coverage/
+*.log
+
+# Configuración local y credenciales
+**/.env
+**/.env.*
+!**/.env.example
+
+# Archivos temporales del editor y del sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*
+
+# Restos locales generados por la aplicación de escritorio anterior
+.vs/
+bin/
+obj/
+*.user

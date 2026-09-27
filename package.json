@@ -1,0 +1,17 @@
+{
+  "name": "prestamos-uao-web",
+  "private": true,
+  "type": "module",
+  "workspaces": ["frontend", "backend"],
+  "scripts": {
+    "dev": "concurrently -n API,WEB -c blue,green \"npm run backend\" \"npm run frontend\"",
+    "backend": "npm run dev --workspace backend",
+    "frontend": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend",
+    "db:init": "node database/init.js",
+    "health:check": "node scripts/check-health.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

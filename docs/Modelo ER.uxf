@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram program="umletino" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>260</w><h>110</h></coordinates><panel_attributes>ROL
+--
+id_rol : int &lt;&lt;PK&gt;&gt;
+nombre_rol : varchar(50) UNIQUE
+descripcion : varchar(255) [0..1]</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>340</x><y>0</y><w>300</w><h>240</h></coordinates><panel_attributes>USUARIO
+--
+id_usuario : int &lt;&lt;PK&gt;&gt;
+codigo : varchar(50) UNIQUE
+nombres : varchar(100)
+apellidos : varchar(100)
+correo : varchar(190) UNIQUE
+password_hash : varchar(255)
+telefono : varchar(20) [0..1]
+programa : varchar(100) [0..1]
+activo : boolean
+creado_en : timestamp
+id_rol : int &lt;&lt;FK&gt;&gt;</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>750</x><y>0</y><w>310</w><h>190</h></coordinates><panel_attributes>SOLICITUD_PRESTAMO
+--
+id_solicitud : int &lt;&lt;PK&gt;&gt;
+fecha_solicitud : timestamp
+fecha_inicio : date
+fecha_fin : date
+observacion : text [0..1]
+id_usuario : int &lt;&lt;FK&gt;&gt;
+id_estado_solicitud : int &lt;&lt;FK&gt;&gt;</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>1150</x><y>0</y><w>290</w><h>110</h></coordinates><panel_attributes>ESTADO_SOLICITUD
+--
+id_estado_solicitud : int &lt;&lt;PK&gt;&gt;
+nombre_estado : varchar(50) UNIQUE
+descripcion : varchar(255) [0..1]</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>0</x><y>380</y><w>280</w><h>110</h></coordinates><panel_attributes>CATEGORIA_EQUIPO
+--
+id_categoria : int &lt;&lt;PK&gt;&gt;
+nombre_categoria : varchar(100) UNIQUE
+descripcion : varchar(255) [0..1]</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>380</x><y>350</y><w>300</w><h>230</h></coordinates><panel_attributes>EQUIPO
+--
+id_equipo : int &lt;&lt;PK&gt;&gt;
+codigo_interno : varchar(50) UNIQUE
+nombre : varchar(100)
+marca : varchar(100) [0..1]
+modelo : varchar(100) [0..1]
+descripcion : text [0..1]
+fecha_compra : date [0..1]
+activo : boolean
+id_categoria : int &lt;&lt;FK&gt;&gt;
+id_estado_equipo : int &lt;&lt;FK&gt;&gt;</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>790</x><y>380</y><w>300</w><h>130</h></coordinates><panel_attributes>DETALLE_SOLICITUD
+--
+id_detalle : int &lt;&lt;PK&gt;&gt;
+id_solicitud : int &lt;&lt;FK&gt;&gt;
+id_equipo : int &lt;&lt;FK&gt;&gt;
+observacion_detalle : text [0..1]
+UNIQUE(id_solicitud, id_equipo)</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>0</x><y>650</y><w>270</w><h>110</h></coordinates><panel_attributes>ESTADO_EQUIPO
+--
+id_estado_equipo : int &lt;&lt;PK&gt;&gt;
+nombre_estado : varchar(50) UNIQUE
+descripcion : varchar(255) [0..1]</panel_attributes><additional_attributes/></element>
+  <element><id>UMLClass</id><coordinates><x>790</x><y>760</y><w>360</w><h>230</h></coordinates><panel_attributes>ARCHIVO_MULTIMEDIA
+--
+id_archivo : int &lt;&lt;PK&gt;&gt;
+nombre_original : varchar(255)
+nombre_almacenado : varchar(255)
+tipo_mime : varchar(150)
+tamano_bytes : bigint
+ruta_archivo : varchar(1024)
+descripcion : text [0..1]
+principal : boolean
+fecha_subida : timestamp
+id_equipo : int &lt;&lt;FK&gt;&gt;
+id_usuario_carga : int &lt;&lt;FK&gt;&gt;</panel_attributes><additional_attributes/></element>
+  <element><id>Relation</id><coordinates><x>250</x><y>30</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+asigna &gt;</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>630</x><y>80</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+realiza &gt;</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>1050</x><y>50</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1
+estado &gt;</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>270</x><y>420</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+clasifica &gt;</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>670</x><y>420</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+incluido &gt;</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>200</x><y>480</y><w>190</w><h>210</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1
+estado v</panel_attributes><additional_attributes>180;10;70;200</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>910</x><y>180</y><w>40</w><h>210</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=1..*
+contiene v</panel_attributes><additional_attributes>10;10;10;200</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>670</x><y>510</y><w>130</w><h>260</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+archivos v</panel_attributes><additional_attributes>10;10;120;250</additional_attributes></element>
+  <element><id>Relation</id><coordinates><x>630</x><y>200</y><w>170</w><h>750</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+carga v</panel_attributes><additional_attributes>10;10;90;10;90;740;160;740</additional_attributes></element>
+</diagram>
